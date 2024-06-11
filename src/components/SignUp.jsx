@@ -4,7 +4,7 @@ import styled from "styled-components";
 const SignUp = ({ handleSignUpToggle }) => {
   const handleSignUp = (e) => {
     e.preventDefault();
-    handleSignUpToggle();
+    handleSignUpToggle(); // 회원가입이 되었을 때 로그인 창으로 이동하기 위해
   };
 
   return (
@@ -17,15 +17,10 @@ const SignUp = ({ handleSignUpToggle }) => {
         <FormLabel>비밀번호 확인</FormLabel>
         <Input placeholder="비밀번호 확인" type="password" />
         <ButtonWrapper>
-          <Button type="submit" color="#4CAF50" $hovercolor="#388E3C">
+          <Button type="submit" color="#388E3C" $hovercolor="#4CAF50">
             회원가입
           </Button>
-          <Button
-            type="button"
-            onClick={handleSignUpToggle}
-            color="#9E9E9E"
-            $hovercolor="#757575"
-          >
+          <Button type="button" onClick={handleSignUpToggle} color="#9E9E9E" $hovercolor="#757575">
             취소
           </Button>
         </ButtonWrapper>
@@ -81,8 +76,7 @@ const Button = styled.button`
   transition: background-color 0.2s ease-in-out;
   background-color: ${(props) => props.color || "rgb(0, 123, 255)"};
   &:hover {
-    background-color: ${(props) =>
-      props.$hovercolor || "rgba(0, 123, 255, 0.8)"};
+    background-color: ${(props) => props.$hovercolor || "rgba(0, 123, 255, 0.8)"};
   }
 `;
 

@@ -1,19 +1,36 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import styled from "styled-components";
 import React from "react";
 import SignUp from "../components/SignUp";
+import { AuthContext } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const LogIn = () => {
   const [isSignUp, setIsSignUp] = useState(false);
+  const [id, setId] = useState("");
+  const [password, setPassword] = useState("");
+  const {login} = useContext(AuthContext);
+  const navigate = useNavigate();
 
-  const handleSignUpToggle = () => {
+  const handleSignUpToggle = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post (
+        "http://moneyfulpublicpolicy.co.kr/login",
+        {
+          id,
+          password,
+        }
+      )
+    }
     setIsSignUp(!isSignUp);
   };
 
   return (
     <>
       {isSignUp ? (
-        <SignUp handleSignUpToggle={handleSignUpToggle} />
+        <SignUp handleSignUpToggle={handleSignUpToggle} /> // 삼항연산자로
       ) : (
         <LogInContainer>
           <LogInForm>
@@ -23,11 +40,7 @@ const LogIn = () => {
             <Input placeholder="비밀번호" type="password"></Input>
             <ButtonWrapper>
               <Button>로그인</Button>
-              <Button
-                color="#4CAF50"
-                $hovercolor="#388E3C"
-                onClick={handleSignUpToggle}
-              >
+              <Button color="#388E3C" $hovercolor="#4CAF50" onClick={handleSignUpToggle}>
                 회원가입
               </Button>
             </ButtonWrapper>
@@ -86,8 +99,7 @@ const Button = styled.button`
   transition: background-color 0.2s ease-in-out;
   background-color: ${(props) => props.color || "rgb(0, 123, 255)"};
   &:hover {
-    background-color: ${(props) =>
-      props.$hovercolor || "rgba(0, 123, 255, 0.8)"};
+    background-color: ${(props) => props.$hovercolor || "rgba(0, 123, 255, 0.8)"};
   }
 `;
 
