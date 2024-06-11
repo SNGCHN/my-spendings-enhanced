@@ -1,8 +1,9 @@
+import React, { useContext } from "react";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import HomePage from "../pages/HomePage";
 import Detail from "../pages/Detail";
 import LogIn from "../pages/LogIn";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
 
 const PrivateRoute = ({ children }) => {
   const { isAuthenticated } = useContext(AuthContext);

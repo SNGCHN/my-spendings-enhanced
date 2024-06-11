@@ -8,23 +8,33 @@ import axios from "axios";
 
 const LogIn = () => {
   const [isSignUp, setIsSignUp] = useState(false);
-  const [id, setId] = useState("");
+  const [id, setId] = useState(""); // id 상태 추가
   const [password, setPassword] = useState("");
-  const {login} = useContext(AuthContext);
+  const { login } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const handleSignUpToggle = async (e) => {
+  const handleSignUpToggle = () => {
+    setIsSignUp(!isSignUp);
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post (
-        "http://moneyfulpublicpolicy.co.kr/login",
-        {
-          id,
-          password,
-        }
-      )
+      const response = await axios.post("https://moneyfulpublicpolicy.co.kr/login", {
+        id,
+        password,
+      });
+      const data = response.data;
+      if (data.success) {
+        login(data.accessToken);
+        navigate("/"); // 로그인 성공 시 메인 페이지로 이동
+      } else {
+        alert("Login failed");
+      }
+    } catch (error) {
+      console.error("로그인 에러:", error);
+      alert("로그인 실패");
     }
-    setIsSignUp(!isSignUp);
   };
 
   return (
@@ -33,13 +43,13 @@ const LogIn = () => {
         <SignUp handleSignUpToggle={handleSignUpToggle} /> // 삼항연산자로
       ) : (
         <LogInContainer>
-          <LogInForm>
+          <LogInForm onSubmit={handleSubmit}>
             <FormLabel>아이디</FormLabel>
-            <Input placeholder="아이디"></Input>
+            <Input placeholder="아이디" value={id} onChange={(e) => setId(e.target.value)} />
             <FormLabel>비밀번호</FormLabel>
-            <Input placeholder="비밀번호" type="password"></Input>
+            <Input placeholder="비밀번호" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
             <ButtonWrapper>
-              <Button>로그인</Button>
+              <Button type="submit">로그인</Button>
               <Button color="#388E3C" $hovercolor="#4CAF50" onClick={handleSignUpToggle}>
                 회원가입
               </Button>
