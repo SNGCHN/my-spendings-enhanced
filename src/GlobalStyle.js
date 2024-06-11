@@ -13,7 +13,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   .container {
-    margin: 50px auto;
+    margin: 100px auto;
     width: 100%;
     max-width: 800px;
     padding: 20px;

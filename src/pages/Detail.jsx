@@ -2,7 +2,11 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
-import { deleteSpending, editSpending, setMonth } from "../store/slices/spendingSlice";
+import {
+  deleteSpending,
+  editSpending,
+  setMonth,
+} from "../store/slices/spendingSlice";
 
 const Detail = () => {
   const spending = useSelector((state) => state.spending.spending);
@@ -58,28 +62,64 @@ const Detail = () => {
         <DetailForm>
           <div>
             <FormLabel>날짜</FormLabel>
-            <Input name='date' value={editDate} type='date' placeholder='YYYY-MM-DD' onChange={handleDateChange} />
+            <Input
+              name="date"
+              value={editDate}
+              type="date"
+              placeholder="YYYY-MM-DD"
+              onChange={handleDateChange}
+            />
           </div>
           <div>
             <FormLabel>항목</FormLabel>
-            <Input name='category' value={editCategory} type='text' placeholder='지출 항목' onChange={handleCategoryChange} />
+            <Input
+              name="category"
+              value={editCategory}
+              type="text"
+              placeholder="지출 항목"
+              onChange={handleCategoryChange}
+            />
           </div>
           <div>
             <FormLabel>금액</FormLabel>
-            <Input name='cost' value={editCost} type='number' placeholder='지출 금액' onChange={handleCostChange} />
+            <Input
+              name="cost"
+              value={editCost}
+              type="number"
+              placeholder="지출 금액"
+              onChange={handleCostChange}
+            />
           </div>
           <div>
             <FormLabel>내용</FormLabel>
-            <Input name='detail' value={editDetail} type='text' placeholder='지출 내용' onChange={handleDetailChange} />
+            <Input
+              name="detail"
+              value={editDetail}
+              type="text"
+              placeholder="지출 내용"
+              onChange={handleDetailChange}
+            />
           </div>
           <ButtonWrapper>
-            <DetailButton onClick={handleEditValue} color='#2196F3' $hovercolor='#1976D2'>
+            <DetailButton
+              onClick={handleEditValue}
+              color="#2196F3"
+              $hovercolor="#1976D2"
+            >
               수정
             </DetailButton>
-            <DetailButton onClick={handleDeleteValue} color='#F44336' $hovercolor='#D32F2F'>
+            <DetailButton
+              onClick={handleDeleteValue}
+              color="#F44336"
+              $hovercolor="#D32F2F"
+            >
               삭제
             </DetailButton>
-            <DetailButton onClick={handleBack} color='#9E9E9E' $hovercolor='#757575'>
+            <DetailButton
+              onClick={handleBack}
+              color="#9E9E9E"
+              $hovercolor="#757575"
+            >
               뒤로 가기
             </DetailButton>
           </ButtonWrapper>
@@ -91,7 +131,7 @@ const Detail = () => {
 
 const DetailContainer = styled.div`
   max-width: 800px;
-  margin: 50px auto;
+  margin: 100px auto;
   padding: 20px;
   background-color: white;
   border-radius: 8px;
@@ -135,7 +175,8 @@ const DetailButton = styled.button`
   transition: background-color 0.2s ease-in-out;
   background-color: ${(props) => props.color || "rgb(0, 123, 255)"};
   &:hover {
-    background-color: ${(props) => props.$hovercolor || "rgba(0, 123, 255, 0.8)"};
+    background-color: ${(props) =>
+      props.$hovercolor || "rgba(0, 123, 255, 0.8)"};
   }
 `;
 
