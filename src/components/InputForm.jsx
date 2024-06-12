@@ -48,21 +48,21 @@ const InputForm = () => {
       <InputWrapper>
         <InputDiv>
           <FormLabel>날짜</FormLabel>
-          <Input onChange={handleDateOnChange} value={date} type='date' placeholder='YYYY-MM-DD' />
+          <Input onChange={handleDateOnChange} value={date} type="date" placeholder="YYYY-MM-DD" />
         </InputDiv>
         <InputDiv>
           <FormLabel>항목</FormLabel>
-          <Input onChange={handleCategoryOnChange} value={category} type='text' placeholder='지출 항목' />
+          <Input onChange={handleCategoryOnChange} value={category} type="text" placeholder="지출 항목" />
         </InputDiv>
         <InputDiv>
           <FormLabel>금액</FormLabel>
-          <Input onChange={handleCostOnChange} value={cost} type='number' placeholder='지출 금액' />
+          <Input onChange={handleCostOnChange} value={cost} type="number" placeholder="지출 금액" />
         </InputDiv>
         <InputDiv>
           <FormLabel>내용</FormLabel>
-          <Input onChange={handleDetailOnChange} value={detail} type='text' placeholder='지출 내용' />
+          <Input onChange={handleDetailOnChange} value={detail} type="text" placeholder="지출 내용" />
         </InputDiv>
-        <Button type='submit'>저장</Button>
+        <Button type="submit">저장</Button>
       </InputWrapper>
     </StyledForm>
   );
@@ -81,7 +81,6 @@ const StyledForm = styled.form`
   align-items: flex-end;
   padding: 20px;
   background-color: #fff;
-  border-radius: 16px;
 `;
 
 const InputWrapper = styled.div`

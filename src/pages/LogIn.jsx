@@ -63,7 +63,7 @@ const LogIn = () => {
 
 const LogInContainer = styled.div`
   max-width: 800px;
-  margin: 100px auto;
+  margin: 250px auto;
   padding: 20px;
   background-color: white;
   border-radius: 8px;
