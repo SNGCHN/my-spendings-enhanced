@@ -4,10 +4,6 @@ export const AuthContext = createContext();
 
 const token = localStorage.getItem("accessToken");
 
-// export async function loginFetch (id, password) {
-//     const response = await axios.post(`${}`)
-// }
-
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(!!token);
 
@@ -21,9 +17,5 @@ export const AuthProvider = ({ children }) => {
     setIsAuthenticated(false);
   };
 
-  return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={{ isAuthenticated, login, logout }}>{children}</AuthContext.Provider>;
 };
