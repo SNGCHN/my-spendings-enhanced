@@ -9,9 +9,10 @@ import { useQuery } from "@tanstack/react-query";
 const NavBar = ({ title }) => {
   const { logout } = useContext(AuthContext);
   const navigate = useNavigate();
+
   const token = localStorage.getItem("accessToken");
-  const { data, isLoading, error } = useQuery({ queryKey: ["profile"], queryFn: () => getUserInfo(token) });
-  console.log(data);
+  const { data } = useQuery({ queryKey: ["profile"], queryFn: () => getUserInfo(token) });
+
   const handleLogout = () => {
     logout();
   };

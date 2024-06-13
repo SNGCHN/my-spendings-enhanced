@@ -36,7 +36,6 @@ const ProfileForm = () => {
     e.preventDefault();
 
     if (token) {
-      console.log(token);
       mutation.mutate({ token, avatar, nickname });
       navigate("/");
     } else {

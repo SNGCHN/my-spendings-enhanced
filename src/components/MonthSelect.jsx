@@ -6,11 +6,11 @@ import { setMonth } from "../store/slices/spendingSlice";
 const MONTHS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
 const MonthSelect = () => {
+  const dispatch = useDispatch();
   const selectedMonth = useSelector((state) => {
     return state.spending.month;
   });
   const handleSetMonth = (month) => {
-    const dispatch = useDispatch();
     dispatch(setMonth(month));
   };
 

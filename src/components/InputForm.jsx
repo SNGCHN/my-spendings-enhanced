@@ -2,44 +2,51 @@ import { useState } from "react";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 import { useDispatch } from "react-redux";
-import { addSpending, setMonth } from "../store/slices/spendingSlice";
+import { postExpense } from "../api/expense";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { setMonth } from "../store/slices/spendingSlice";
 
 const InputForm = () => {
-  const dispatch = useDispatch();
   const [date, setDate] = useState("");
-  const [category, setCategory] = useState("");
-  const [cost, setCost] = useState(0);
-  const [detail, setDetail] = useState("");
+  const [item, setItem] = useState("");
+  const [amount, setAmount] = useState(0);
+  const [description, setDescription] = useState("");
+  const dispatch = useDispatch();
+  const queryClient = useQueryClient();
+  const token = localStorage.getItem("accessToken");
+  const { data, isLoading, error } = useQuery({ queryKey: ["profile"], queryFn: () => getUserInfo(token) });
+
+  const mutation = useMutation({ mutationFn: (newSpending) => postExpense(newSpending), onSuccess: queryClient.invalidateQueries(["expense"]) });
 
   const handleDateOnChange = (e) => {
     setDate(e.target.value);
   };
 
   const handleCategoryOnChange = (e) => {
-    setCategory(e.target.value);
+    setItem(e.target.value);
   };
 
   const handleCostOnChange = (e) => {
-    setCost(e.target.value);
+    setAmount(e.target.value);
   };
 
   const handleDetailOnChange = (e) => {
-    setDetail(e.target.value);
+    setDescription(e.target.value);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const month = Number(date.split("-")[1]);
     const newSpending = {
-      id: uuidv4(),
       date,
       month,
-      category,
-      cost,
-      detail,
+      item,
+      amount,
+      description,
+      createdBy: data?.nickname,
     };
-    console.log(month);
-    dispatch(addSpending(newSpending));
+
+    mutation.mutate(newSpending);
     dispatch(setMonth(month));
   };
 
@@ -52,15 +59,15 @@ const InputForm = () => {
         </InputDiv>
         <InputDiv>
           <FormLabel>항목</FormLabel>
-          <Input onChange={handleCategoryOnChange} value={category} type="text" placeholder="지출 항목" />
+          <Input onChange={handleCategoryOnChange} value={item} type="text" placeholder="지출 항목" />
         </InputDiv>
         <InputDiv>
           <FormLabel>금액</FormLabel>
-          <Input onChange={handleCostOnChange} value={cost} type="number" placeholder="지출 금액" />
+          <Input onChange={handleCostOnChange} value={amount} type="number" placeholder="지출 금액" />
         </InputDiv>
         <InputDiv>
           <FormLabel>내용</FormLabel>
-          <Input onChange={handleDetailOnChange} value={detail} type="text" placeholder="지출 내용" />
+          <Input onChange={handleDetailOnChange} value={description} type="text" placeholder="지출 내용" />
         </InputDiv>
         <Button type="submit">저장</Button>
       </InputWrapper>

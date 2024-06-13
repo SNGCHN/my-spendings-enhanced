@@ -2,28 +2,27 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { useQuery } from "@tanstack/react-query";
+import { getExpenses } from "../api/expense";
 
 const SpendingItem = () => {
-  const spending = useSelector((state) => {
-    return state.spending.spending;
-  });
   const selectedMonth = useSelector((state) => {
     return state.spending.month;
   });
-  const filteredSpend = spending.filter((item) => item.month === selectedMonth);
+  const { data: expense = [], isLoading, error } = useQuery({ queryKey: ["expense", selectedMonth], queryFn: () => getExpenses(selectedMonth) });
   return (
     <ListWrapper>
-      {filteredSpend.map((item) => {
+      {expense.map((expense) => {
         return (
-          <Link to={`/detail/${item.id}`} key={item.id}>
+          <Link to={`/detail/${expense.id}`} key={expense.id}>
             <ItemContainer>
               <DatePrice>
-                <DateLabel>{item.date}</DateLabel>
+                <DateLabel>{expense.date}</DateLabel>
                 <ItemName>
-                  {item.category} - {item.detail}
+                  {expense.item} - {expense.description} / by.{expense.createdBy}
                 </ItemName>
               </DatePrice>
-              <ItemPrice>{item.cost}원</ItemPrice>
+              <ItemPrice>{expense.amount}원</ItemPrice>
             </ItemContainer>
           </Link>
         );
